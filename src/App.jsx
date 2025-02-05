@@ -15,6 +15,7 @@ function App() {
   const [hasLoaded, setHasLoaded] = useState(false);
 
 
+
   useEffect(() => {
     const alltasks = localStorage.getItem("Tasks");
     if (alltasks) {
@@ -71,7 +72,7 @@ function App() {
       background: "transparent",
       color: "white",
       cancelButtonColor: "#3085d6",
-      border: "white",
+
     }).then((result) => {
       if (result.isConfirmed) {
         let newinp = inp.filter((e) => e.id !== id)
@@ -82,6 +83,7 @@ function App() {
           icon: "success",
           background: "transparent",
           color: "#fff",
+          timer: 1000
         });
       }
     });
@@ -99,7 +101,7 @@ function App() {
       background: "transparent",
       color: "white",
       cancelButtonColor: "#3085d6",
-      border: "white",
+
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -107,9 +109,12 @@ function App() {
         Swal.fire({
           title: "Deleted!",
           text: "All Tasks has been deleted.",
+          confirmButtonText: "Done Bro 👍",
           icon: "success",
           background: "transparent",
           color: "#fff",
+          timer: 1000,
+
         });
       }
     })
@@ -132,7 +137,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="md:container mx-auto my-5 rounded border-blue-400 min-h-[150vh]">
+      <div className="my-10 md:my-0 md:container mx-auto rounded border-blue-400 min-h-[120vh]">
         <div className="gap-5 w-full p-3 flex items-center justify-center">
           <div className='w-1/2 px-2 bg-[rgb(21,16,28)] rounded-b-xl flex items-center justify-between'>
             <input
@@ -151,24 +156,28 @@ function App() {
             <Tooltip id="add-tooltip" place="top" content="Add the task" />
           </div>
         </div>
-        <div className="list rounded border-blue-400 w-9/10 sm:w-1/2 mx-auto h-8/9 sm:my-10 relative">
-          <div className='flex items-center justify-between my-15 '>
-            <h1>Tasks to do:</h1>
-            <br />
-            {inp.length !== 0 && <button onClick={handledeleteall} className='relative inline-flex items-center justify-center p-2 px-4 text-base font-medium text-white bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-lg group hover:bg-gradient-to-br focus:z-10 focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800 dark:bg-gray-800 dark:text-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer'>
-              <span className="relative z-10">Delete all Tasks</span>
-            </button>}
 
-          </div>
+        <div className="list rounded border-blue-400 w-9/10 sm:w-1/2 mx-auto h-8/9  relative">
+
+          {inp.length !== 0 && <div className='flex items-center justify-between my-7 '>
+            <h1 className='ml-8 text-[20px]'>Tasks to do:</h1>
+            <button onClick={handledeleteall} className='relative inline-flex items-center justify-center p-2 px-4 text-base font-medium text-white bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-lg group hover:bg-gradient-to-br focus:z-10 focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800 dark:bg-gray-800 dark:text-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer'>
+              <span className="relative z-10">Delete all Tasks</span>
+            </button>
+
+          </div>}
+          <div className={`w-9/10 mx-auto h-[1.5px] bg-gradient-to-r from-cyan-500  via-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-400/50 ${inp.length!==0?"mb-10":"invisible mb-20"}`}></div>
+          
 
           <div className="task  flex flex-col gap-2 p-5 md:w-7/8 md:m-auto rounded-xl bg-[rgb(21,16,28)] overflow-x-hidden word-wrap">
             {inp.length === 0 && <div className='text-center'>No Tasks!</div>}
             {inp.map((e) => (
               <div key={e.id} className="flex justify-between my-2 items-center  word-wrap">
-                <div className={`mr-2 break-all text-wrap w-full max-w-[75%] p-2 bg-[#0d0714] rounded-lg ${e.isDone ? "line-through" : ""}`}>
+                <div className={`mr-2 break-all text-wrap w-full max-
+                  -[75%] p-2 bg-[#0d0714] rounded-lg ${e.isDone ? "line-through" : ""}`}>
                   {e.task}
                 </div>
-                
+
                 <div className="btn flex items-center gap-4">
                   <label data-tooltip-id="done-tooltip" className="relative cursor-pointer">
                     <input
@@ -189,11 +198,11 @@ function App() {
                   <Tooltip id="done-tooltip" place="top" content="Mark as Done" />
 
                   <button data-tooltip-id="edit-tooltip" onClick={() => handleedit(e.id)}>
-                    <img src={edit} alt="edit" className='h-7 cursor-pointer hover:scale-110 transition-all' />
+                    <img src={edit} alt="edit" className='h-12 md:h-10 cursor-pointer hover:scale-110 transition-all' />
                   </button>
                   <Tooltip id="edit-tooltip" place="top" content="Edit Task" />
                   <button data-tooltip-id="delete-tooltip" onClick={() => handledelete(e.id)}>
-                    <img src={del} alt="del" className='h-fit cursor-pointer hover:scale-110 transition-all' />
+                    <img src={del} alt="del" className='h-10 cursor-pointer hover:scale-110 transition-all' />
                   </button>
                   <Tooltip id="delete-tooltip" place="top" content="Delete Task" />
                 </div>
