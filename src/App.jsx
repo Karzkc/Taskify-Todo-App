@@ -7,6 +7,8 @@ import plus from './assets/plus.svg';
 import edit from './assets/edit.svg';
 import del from './assets/delete.svg';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+
 
 function App() {
   const input_ref = useRef(null);
@@ -137,7 +139,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="my-10 md:my-0 md:container mx-auto rounded border-blue-400 min-h-[120vh]">
+      <div className="my-10 md:my-0 md:container mx-auto rounded border-blue-400 min-h-[100vh]">
         <div className="gap-5 w-full p-3 flex items-center justify-center">
           <div className='w-1/2 px-2 bg-[rgb(21,16,28)] rounded-b-xl flex items-center justify-between'>
             <input
@@ -211,6 +213,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
