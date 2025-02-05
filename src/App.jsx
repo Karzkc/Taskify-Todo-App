@@ -59,7 +59,7 @@ function App() {
     setInp(newinp)
   };
 
-  const handledelete = (id) => {
+  const handledelete = (id,) => {
     Swal.fire({
       title: "Taskify says",
       text: "Are you sure you want to delete this task?",
@@ -85,7 +85,36 @@ function App() {
         });
       }
     });
-  };
+
+  }
+  const handledeleteall = () => {
+    Swal.fire({
+      title: "Taskify says",
+      text: "Are you sure you want to delete all the Tasks?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete all!",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#d33",
+      background: "transparent",
+      color: "white",
+      cancelButtonColor: "#3085d6",
+      border: "white",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        setInp([])
+        Swal.fire({
+          title: "Deleted!",
+          text: "All Tasks has been deleted.",
+          icon: "success",
+          background: "transparent",
+          color: "#fff",
+        });
+      }
+    })
+  }
+
 
   const handlechange = (e) => {
     setTask(e.target.value);
@@ -103,7 +132,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto my-5 border rounded border-blue-400 min-h-[150vh]">
+      <div className="md:container mx-auto my-5 rounded border-blue-400 min-h-[150vh]">
         <div className="gap-5 w-full p-3 flex items-center justify-center">
           <div className='w-1/2 px-2 bg-[rgb(21,16,28)] rounded-b-xl flex items-center justify-between'>
             <input
@@ -122,16 +151,24 @@ function App() {
             <Tooltip id="add-tooltip" place="top" content="Add the task" />
           </div>
         </div>
-        <div className="list rounded border-blue-400 w-1/2 m-auto h-8/9 my-5">
-          <h1>Tasks to do:</h1>
-          <br />
-          <div className="task flex flex-col gap-2 p-5 w-7/8 m-auto rounded-xl bg-[rgb(21,16,28)]">
+        <div className="list rounded border-blue-400 w-9/10 sm:w-1/2 mx-auto h-8/9 sm:my-10 relative">
+          <div className='flex items-center justify-between my-15 '>
+            <h1>Tasks to do:</h1>
+            <br />
+            {inp.length !== 0 && <button onClick={handledeleteall} className='relative inline-flex items-center justify-center p-2 px-4 text-base font-medium text-white bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-lg group hover:bg-gradient-to-br focus:z-10 focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800 dark:bg-gray-800 dark:text-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer'>
+              <span className="relative z-10">Delete all Tasks</span>
+            </button>}
+
+          </div>
+
+          <div className="task  flex flex-col gap-2 p-5 md:w-7/8 md:m-auto rounded-xl bg-[rgb(21,16,28)] overflow-x-hidden word-wrap">
             {inp.length === 0 && <div className='text-center'>No Tasks!</div>}
             {inp.map((e) => (
-              <div key={e.id} className="flex items-center justify-between my-2">
-                <div className={e.isDone ? "line-through" : ""}>
+              <div key={e.id} className="flex justify-between my-2 items-center  word-wrap">
+                <div className={`mr-2 break-all text-wrap w-full max-w-[75%] p-2 bg-[#0d0714] rounded-lg ${e.isDone ? "line-through" : ""}`}>
                   {e.task}
                 </div>
+                
                 <div className="btn flex items-center gap-4">
                   <label data-tooltip-id="done-tooltip" className="relative cursor-pointer">
                     <input
@@ -156,7 +193,7 @@ function App() {
                   </button>
                   <Tooltip id="edit-tooltip" place="top" content="Edit Task" />
                   <button data-tooltip-id="delete-tooltip" onClick={() => handledelete(e.id)}>
-                    <img src={del} alt="del" className='h-7 cursor-pointer hover:scale-110 transition-all' />
+                    <img src={del} alt="del" className='h-fit cursor-pointer hover:scale-110 transition-all' />
                   </button>
                   <Tooltip id="delete-tooltip" place="top" content="Delete Task" />
                 </div>
