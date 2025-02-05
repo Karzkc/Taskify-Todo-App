@@ -40,7 +40,16 @@ function App() {
 
   const handleadd = () => {
     if (task.trim() === "") {
-      alert('Please enter a Valid Task!');
+      Swal.fire({
+        title: "Taskify says",
+        text: "Please enter a Valid Task!",
+        icon: "warning",
+        confirmButtonColor: "#d33",
+        background: "transparent",
+        color: "white",
+        cancelButtonColor: "#3085d6",
+
+      })
       return;
     }
     const newTask = { id: uuidv4(), task, isDone: false };
