@@ -60,6 +60,7 @@ function App() {
 
   const handleenter = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       handleadd();
     }
   };
